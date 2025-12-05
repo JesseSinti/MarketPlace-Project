@@ -1,0 +1,50 @@
+
+{% extends 'storefront/base.html' %}
+
+{% block title %}{{item.name}}{% endblock %}
+
+{%block content %}
+<div class="itemcontainer">
+    <div class="itemimgcontainer">
+        <img src="{{product.image.url}}" class="itemimg">
+    </div>
+
+    <div class="infocontainer">
+        <h1 class="infohead">{{ product.name}}</h1>
+        <p class="infotxt"><strong>Price:</strong> ${{product.price}}</p>
+        <p class="infotxt"><strong>Seller:</strong> {{product.created_by}}</p>
+        {% if product.description %}
+            <p class="infotxt"><strong class="infoHead">Description:</strong><br>
+                 {{product.description}}
+            </p>
+        {% endif %}
+        <a href="{% url 'storefront:checkout' product.id %}"><button class="purchase">Purchase</button></a>
+        <a href="{% url 'cart:add' product.id %}"><button class="purchase">Add to Cart</button></a>
+        {% if request.user == product.created_by %}
+            <div class="specify button">
+                <a href="{% url 'product:editproduct' product.id %}"><button class='detail-edit-button'>Edit Item</button></a>
+                <a href="{% url 'product:deleteproduct' product.id %}"><button class='detail-delete-button'>Delete Item</button></a>
+                <p>You created this item!</p><br>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<h2 class="rlheader">Related Items</h2>
+<div class="rlcontainer">
+    {% for product in related_product %}
+    <div class="rlcard">
+            <div class='card-content'>
+                <a class='rl-links' href="{% url 'product:productdetail' product.id %}">
+                    <div class='itemimgcontainer'>
+                        <img src="{{ product.image.url}}" class="rlimg">
+                    </div>
+                    <div class="rlinfocontainer">
+                        <h2 class="rlinfotxt">{{ product.name }}</h2>
+                        <p class="rlinfotxt">Price : {{product.price }}</p>
+                    </div>
+                </a>
+            </div>
+    </div>
+    {% endfor %} 
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'storefront/base.html' %}
+
+{% block title %}Login Page{% endblock %}
+{% block content %}
+<div class='login_page'>
+    <div class="container">
+        <h1>Login in </h1>
+        <form method="post" action=".">
+            {% csrf_token %}
+            <div class="Username">
+                <label class="Usernametxt">Username</label><br>
+                {{form.username}}
+            </div>        
+            <div class="Email">
+                <label class="Emailtxt">Email</label><br>
+                {{form.email}}
+            </div>        
+            <div class="PhoneNumber">
+                <label class="PhoneNumbertxt">Phone Number</label><br>
+                {{form.phone_number}}
+            </div>        
+            <div class="password1">
+                <label class="password1txt">Password</label><br>
+                {{ form.password }}
+            
+            {% if form.errors or form.non_field_errors %}
+                <div class="SignupErrorField">
+                    {% for field in form %}
+                        {{ form.errors }}
+                    {% endfor %}
+                    {{ form.non_field_errors }}
+            {% endif %}
+                </div>
+            <button class="submitbtn" type="submit">Login in </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "storefront/base.html" %}
+{% block content %}
+<div id='container'>
+    <div id='itemlisting-container-c-items'>
+        <ul>
+            {% for product in products %}
+                <div class="item-card-c">
+                    <a href="{% url 'product:detail' product.id %}">
+                        <div>
+                            <img src="{{ product.image.url}}" class="rounded-t-xl">
+                        </div>
+                        <div class="p-6 bg-white-rounded-b-xl">
+                            <h2 class="text-2xl">{{ product.name }}</h2>
+                            <p class="text-gray-500">Price : {{product.price }}</p>
+                        </div>
+                    </a>
+                    <div class="purchase">
+                        <a href="{% url 'storefront:checkout' product.id %}"><button>Purchase</button></a>
+                        <a href="{% url 'cart:add' product.id %}"><button>Add to cart</button></a>
+                    </div>
+                </div>
+            {% empty %}
+                <li>None found</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% extends 'storefront/base.html' %}
+
+{% block content %}
+
+<h1 class="title">{{ title }}</h1>
+<div class='new-item-card'>
+    <h1 class='new-item-text'>List Item</h1>
+    <form method="post" action="." enctype="multipart/form-data" class='new-item-forms'>
+        {% csrf_token %}
+
+        <div class='new-item-div'>
+            <div class='category-form'>
+                <label class='category-label'>Category</label>
+                {{ form.category }}
+            </div>
+
+            <div class='name-form'>
+                <label class='name-label'>Name</label>
+                {{ form.name }}
+            </div>
+
+            <div class='price-form'>
+                <label class='price-label'>Price</label>
+                {{ form.price }}
+            </div>
+
+            <div class='description-form'>
+                <label class='description-label'>Description</label>
+                {{ form.description }}
+            </div>
+            
+            <div class='image-form'>
+                <label class='image-label'>Image</label>
+                {{ form.image }}
+            </div>
+        </div>
+
+
+        {% if form.errors or form.non_field_errors %}
+        <div class="SignupErrorField">
+            {% for field in form %}
+                {{ form.errors }}
+            {% endfor %}
+            {{ form.non_field_errors }}
+           </div> 
+        {% endif %}
+        <button type="submit" class="form-submit-btn">Submit</button>
+    </form>
+</div>
+{% endblock %}

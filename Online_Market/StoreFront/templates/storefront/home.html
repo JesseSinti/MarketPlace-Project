@@ -1,0 +1,82 @@
+{% extends "storefront/base.html" %}
+{% block content %}
+
+<div id="container">
+
+    {% if view_selected_category %}
+        <div class="category-section">
+            <h2 class="category-title">{{ view_selected_category.name }}</h2>
+
+            <div class="items-grid">
+                {% for product in filtered_products %}
+                    <div class="item-card">
+                        <a class="items-link-class" href="{% url 'product:productdetail' product.id %}">
+                            <img class="home-item-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            <div class="card-info">
+                                <h3 class="text-2xl">{{ product.name }}</h3>
+                                <p class="text-gray-500">Price: ${{ product.price }}</p>
+                            </div>
+                        </a>
+
+                        <div class="purchase">
+                            <a href="{% url 'storefront:checkout' product.id %}">
+                                <button>Purchase</button>
+                            </a>
+                        </div>
+
+                        <div class="cartadd">
+                            <a href="{% url 'cart:add' product.id %}">
+                                <button>Add to cart</button>
+                            </a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="no-items-p-tag">No items available in this {{ category.name }}.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% else %}
+        {% for category in all_categories %}
+            {{ category }}
+            {% if category.products.exists %}
+                <div class="category-section">
+                    <h2 class="category-title">{{ category.name }}</h2>
+
+                    <div class="items-grid">
+                        {% for product in category.products.all %}
+                            <div class="item-card">
+                                <a class="items-link-class" href="{% url 'product:productdetail' product.id %}">
+                                    <img class="home-item-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                    <div class="card-info">
+                                        <h3 class="text-2xl">{{ product.name }}</h3>
+                                        <p class="text-gray-500">Price: ${{ product.price }}</p>
+                                    </div>
+                                </a>
+
+                                <div class="purchase">
+                                    <a href="{% url 'storefront:checkout' product.id %}">
+                                        <button>Purchase</button>
+                                    </a>
+                                </div>
+
+                                <div class="cartadd">
+                                    <a href="{% url 'cart:add' product.id %}">
+                                        <button>Add to cart</button>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            
+        {% else %}
+            <p>No products available in {{ category.name }} category.</p>
+        {% endif %}
+        {% endfor %}
+       
+    {% endif %}
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends "storefront/base.html" %}
+{% block content %}
+
+<div class='cart-entire-page'>
+    <div class='cart-page-card'>
+        <h1 class='your-cart-text'>Your Cart</h1>
+        {% if products %}
+        <table class='cart-table'>
+            <tr class='cart-desc-table'>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+
+            {% for cart_product in products %}
+            <tr class='cart-var-table'>
+                <td>{{ cart_product.item.name }}</td>
+                <td>{{ cart_product.quantity }}</td>
+                <td>${{ cart_product.subtotal }}</td>
+                <td>
+                    <a class='cart-remove-button' href="{% url 'cart:remove' cart_product.product.id %}">Remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table> <!--cart-table-->
+
+        <h3 class='cart-total-text'>Total: ${{ total }}</h3>
+        <a class='checkout-cart-button' href="{% url 'cart:checkout_cart' %}"><button>Checkout Cart</button></a>
+
+        {% else %}
+        <p>Your cart is empty.</p>
+        {% endif %}
+    </div> <!--cart-page-content-->
+</div> <!--cart-entire-page-->
+{% endblock %}
