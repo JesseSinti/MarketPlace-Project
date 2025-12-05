@@ -48,16 +48,16 @@ def EditProduct(request, pk):
 def ProductBrowsing(request):
     items_queryset = Product.objects.filter(is_sold=False)
     cat_id = request.GET.get('category')
-    
     view_selected_category = None
     all_categories = Category.objects.all()
 
     if cat_id:
         items_queryset = items_queryset.filter(category_id=cat_id)
         view_selected_category = Category.objects.filter(id=cat_id).first()
-    
+    print(view_selected_category)
+    print(items_queryset)
     context = {
-    'filtered_items': items_queryset,
+    'filtered_products': items_queryset,
     'view_selected_category': view_selected_category,
     'all_categories': all_categories,
     'global_categories': all_categories,
