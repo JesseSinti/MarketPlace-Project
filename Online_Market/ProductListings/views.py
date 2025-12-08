@@ -47,6 +47,7 @@ def EditProduct(request, pk):
 
 def ProductBrowsing(request):
     items_queryset = Product.objects.filter(is_sold=False)
+    print(f'{items_queryset}\n')
     cat_id = request.GET.get('category')
     view_selected_category = None
     all_categories = Category.objects.all()

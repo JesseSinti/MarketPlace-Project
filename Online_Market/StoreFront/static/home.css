@@ -1,0 +1,72 @@
+
+.TV-logo-container {
+    margin: 4px;
+    background-color: rgb(252, 252, 252);
+    margin-right: 12vh;
+    border-radius: 7px;
+}
+
+.TV-logo-container img {
+    width: 110px;
+    transform: translate(0px, -25px);
+}
+
+#container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.category-section {
+    margin-bottom: 3.125rem;
+    background-color: #abaaaa;
+    border-color: #E5E7EB;
+    width: 80vw;
+    border-radius: 4px;
+    min-height: 60vh;
+}
+
+.category-title {
+    display:flex;
+    justify-content:center;
+    font-size: 4rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color:#000000;
+    color:rgb(251, 251, 251);
+    border-bottom: solid .420rem;
+    width:80vw;
+    transform: translate(0,-3.3563rem);
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14.375rem, 1fr));
+    gap:2rem;
+    padding-top:0;
+    padding: 5px;
+}
+
+.item-card {
+    background-color: #ffffff;
+    border-color: #DFDFDF;
+    border-radius: 4px;
+    overflow:auto;
+    box-shadow: 0 .25rem .625rem rgba(0,0,0,0.25);
+    text-align:center;
+    height: auto;
+    width:20vw;
+}
+
+.home-item-img {
+    width: 20vw;
+    object-fit:cover;
+}
+
+.card-info {
+    padding: .625rem;
+}
+
+
+.no-items-p-tag {
+    color:white;
+}
