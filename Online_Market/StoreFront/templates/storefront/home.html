@@ -61,9 +61,7 @@
                                 </div>
 
                                 <div class="cartadd">
-                                    <a href="{% url 'cart:add' product.id %}">
-                                        <button>Add to cart</button>
-                                    </a>
+                                       @Html.ActionLink("Link text", "Add to cart", new { id = product.AppointmentIdentifier.id }, new { @class = "cartadd", data_id = product.AppointmentIdentifier.id })   
                                 </div>
                             </div>
                         {% endfor %}
