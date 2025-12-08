@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -6,9 +7,32 @@ from ProductListings.models import *
 from .forms import *
 from django.db.models import Q
 import stripe
-# Create your views here.
+from Online_Market.config import OPENAI_API_KEY
+from django.views.decorators.csrf import csrf_exempt
+import openai
+import os
+
+openai.api_key = OPENAI_API_KEY
+
+@csrf_exempt
+def openAiProc(request):
+    if request.method == 'POST':
+        prompt = request.POST.get('prompt')
+
+        try:
+            response = openai.Completion.create(
+                model="text-davinci-003",
+                prompt=prompt,
+                max_tokens=250
+            )
+            return JsonResponse({'response': response.choices[0].text.strip()})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 @login_required
 def CheckoutView(request, pk):
     product = Product.objects.get(id=pk)
@@ -70,7 +94,6 @@ def SearchProducts(request):
 
         return render(request, 'storefront/search.html', {'products' :products, 'query' : query, 'category' : category})
     
-
 @login_required
 def UserCart(request):
     products = Product.objects.filter()
