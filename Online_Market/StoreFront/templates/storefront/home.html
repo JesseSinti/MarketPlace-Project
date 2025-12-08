@@ -1,6 +1,7 @@
 {% extends "storefront/base.html" %}
+{% load static %}
 {% block content %}
-
+<link rel="stylesheet" href="{% static 'home.css' %}">
 <div id="container">
 
     {% if view_selected_category %}
@@ -30,19 +31,15 @@
                             </a>
                         </div>
                     </div>
-                {% empty %}
-                    <p class="no-items-p-tag">No items available in this {{ category.name }}.</p>
                 {% endfor %}
             </div>
         </div>
 
     {% else %}
         {% for category in all_categories %}
-            {{ category }}
             {% if category.products.exists %}
                 <div class="category-section">
                     <h2 class="category-title">{{ category.name }}</h2>
-
                     <div class="items-grid">
                         {% for product in category.products.all %}
                             <div class="item-card">
@@ -68,10 +65,7 @@
                             </div>
                         {% endfor %}
                     </div>
-                </div>
-            
-        {% else %}
-            <p>No products available in {{ category.name }} category.</p>
+                </div>    
         {% endif %}
         {% endfor %}
        

@@ -47,6 +47,7 @@ def EditProduct(request, pk):
 
 def ProductBrowsing(request):
     items_queryset = Product.objects.filter(is_sold=False)
+    print(f'{items_queryset}\n')
     cat_id = request.GET.get('category')
     
     view_selected_category = None
@@ -55,12 +56,15 @@ def ProductBrowsing(request):
     if cat_id:
         items_queryset = items_queryset.filter(category_id=cat_id)
         view_selected_category = Category.objects.filter(id=cat_id).first()
-    
+
+    print(f'{items_queryset}\n')
+    print(f'{view_selected_category}\n')
+
     context = {
-    'filtered_items': items_queryset,
-    'view_selected_category': view_selected_category,
-    'all_categories': all_categories,
-    'global_categories': all_categories,
-    'global_selected_category': view_selected_category,
+        'filtered_products': items_queryset,
+        'view_selected_category': view_selected_category,
+        'all_categories': all_categories,
+        'global_categories': all_categories,
+        'global_selected_category': view_selected_category,
     }
     return render(request, 'storefront/home.html', context)
