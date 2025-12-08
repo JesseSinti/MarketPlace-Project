@@ -4,8 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'common.css' %}"> 
-    <script src="{% static 'common.js' %}"></script>
+    <script>
+    const ADD_TO_CART_URL = "{% url 'cart:add_to_cart' %}";
+    const CSRF_TOKEN = "{{ csrf_token }}";
+    </script>
+    <link rel="stylesheet" href="{% static 'CSS/common.css' %}"> 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>  
+    <script src="{% static 'JS/buttons.js' %}" defer></script>
 </head>
 <body id="body"> 
 <div id='navbar'>
@@ -35,8 +40,8 @@
 
     {% if request.user.is_authenticated %}
         <div class='authenticated-nav-links'>
-            <a href="{% url 'product:newproduct' %}"><button class="addbtn">List Item</button></a>
-            <a href="{% url 'dashboard:UserHome' %}"><button class="createbtn">Item Listing</button></a>
+            <a href="{% url 'product:newproduct' %}"><button class="createbtn">List Item</button></a>
+            <a href="{% url 'dashboard:UserHome' %}"><button class="useritembtn">Item Listing</button></a>
             <a href="{% url 'cart:Home' %}"><button class="cartbtn">Cart</button></a>
             <a href="{% url 'storefront:logout' %}"><button class="logoutbtn">Logout</button></a>
         </div>

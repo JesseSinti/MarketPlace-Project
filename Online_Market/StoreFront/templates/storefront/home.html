@@ -1,7 +1,9 @@
 {% extends "storefront/base.html" %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'home.css' %}">
+<link rel="stylesheet" href="{% static 'CSS/home.css' %}">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>   
+<script src="{% static 'JS/buttons.js' %}" defer></script>
 <div id="container">
 
     {% if view_selected_category %}
@@ -26,9 +28,7 @@
                         </div>
 
                         <div class="cartadd">
-                            <a href="{% url 'cart:add' product.id %}">
-                                <button>Add to cart</button>
-                            </a>
+                            <button class="add" data-id="{{ product.id }}">Add to cart</button> 
                         </div>
                     </div>
                 {% endfor %}
@@ -42,7 +42,7 @@
                     <h2 class="category-title">{{ category.name }}</h2>
                     <div class="items-grid">
                         {% for product in category.products.all %}
-                            <div class="item-card">
+                            <div class="item-card" >
                                 <a class="items-link-class" href="{% url 'product:productdetail' product.id %}">
                                     <img class="home-item-img" src="{{ product.image.url }}" alt="{{ product.name }}">
                                     <div class="card-info">
@@ -58,7 +58,7 @@
                                 </div>
 
                                 <div class="cartadd">
-                                       @Html.ActionLink("Link text", "Add to cart", new { id = product.AppointmentIdentifier.id }, new { @class = "cartadd", data_id = product.AppointmentIdentifier.id })   
+                                    <button class="add" data-id="{{ product.id }}">Add to cart</button>         
                                 </div>
                             </div>
                         {% endfor %}

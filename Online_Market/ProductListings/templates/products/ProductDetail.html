@@ -19,12 +19,12 @@
             </p>
         {% endif %}
         <a href="{% url 'storefront:checkout' product.id %}"><button class="purchase">Purchase</button></a>
-        <a href="{% url 'cart:add' product.id %}"><button class="purchase">Add to Cart</button></a>
+        <button class="add" data-id="{{ product.id }}">Add to Cart</button>
         {% if request.user == product.created_by %}
             <div class="specify button">
                 <a href="{% url 'product:editproduct' product.id %}"><button class='detail-edit-button'>Edit Item</button></a>
                 <a href="{% url 'product:deleteproduct' product.id %}"><button class='detail-delete-button'>Delete Item</button></a>
-                <p>You created this item!</p><br>
+                <p>Your the owner of this item.</p><br>
             </div>
         {% endif %}
     </div>

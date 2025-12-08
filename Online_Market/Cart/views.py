@@ -4,6 +4,9 @@ from ProductListings.models import Product
 from django.contrib.auth.decorators import login_required
 import stripe
 from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 # Create your views here.
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -55,17 +58,23 @@ def checkout_success(request):
     CartItem.objects.filter(cart__user=request.user).delete()
     return redirect('cart:Home')
 
+
+@csrf_exempt
+@require_http_methods(["POST"])
 @login_required
-def add_to_cart(request, pk):
-    added_product = get_object_or_404(Product, pk=pk)
-    cart, created = Cart.objects.get_or_create(user=request.user)
-    cart_product, created = CartItem.objects.get_or_create(cart=cart,product=added_product)
-    if not created:
-        cart_product.quantity += 1
-        cart_product.save()
-    else:
-        cart_product.save()
-    return redirect('product:productbrowsing')
+def add_to_cart(request):
+    if request.method == "POST":
+        pk = request.POST.get('id_number')
+        added_product = get_object_or_404(Product, pk=pk)
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_product, created = CartItem.objects.get_or_create(cart=cart,product=added_product)
+        if not created:
+            cart_product.quantity += 1
+            cart_product.save()
+            return JsonResponse({'status' : 'success'})
+        else:
+            cart_product.save()
+    return JsonResponse({"error" : "Invalid Request"}, status=400)
 
 @login_required
 def delete_cart(request, pk):
@@ -75,7 +84,7 @@ def delete_cart(request, pk):
         cart_product.quantity -= 1
         cart_product.save()
     else:
-        cart.product.delete()
+        cart_product.delete()
     return redirect("cart:Home")
 
 @login_required

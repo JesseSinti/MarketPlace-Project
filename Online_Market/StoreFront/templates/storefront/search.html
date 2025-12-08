@@ -16,7 +16,7 @@
                     </a>
                     <div class="purchase">
                         <a href="{% url 'storefront:checkout' product.id %}"><button>Purchase</button></a>
-                        <a href="{% url 'cart:add' product.id %}"><button>Add to cart</button></a>
+                        <button class="add" data-id="{{ product.id }}">Add to cart</button></a>
                     </div>
                 </div>
             {% empty %}
