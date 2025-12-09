@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'DashBoardScreen',
     'Cart',
     'phonenumber_field',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

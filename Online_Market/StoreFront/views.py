@@ -6,6 +6,7 @@ from ProductListings.models import *
 from .forms import *
 from django.db.models import Q
 import stripe
+from .filters import ProductFilter
 # Create your views here.
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -48,7 +49,8 @@ def Log_out(request):
 def StoreFrontHome(request):
     UnsoldProducts = Product.objects.filter(is_sold=False)
     categories = Category.objects.all()
-    return render(request, 'storefront/home', {'categories' : categories, 'products' : UnsoldProducts})
+    f = ProductFilter(request.GET, queryset=Product.objects.all())
+    return render(request, 'storefront/home', {'categories' : categories, 'products' : UnsoldProducts, 'filter' : f})
 
 def signup_view(request):
     if request.method == "POST":

@@ -18,6 +18,7 @@
 }
 
 .category-section {
+    margin-top:10rem;
     margin-bottom: 3.125rem;
     background-color: #abaaaa;
     border-color: #E5E7EB;
@@ -57,9 +58,18 @@
     width:20vw;
 }
 
+.imagecontainer {
+    width: 100%;
+    aspect-ratio: 4 / 3;  
+    overflow: hidden;
+    border-radius: 8px;
+}
+
 .home-item-img {
-    width: 20vw;
-    object-fit:cover;
+    width : 100%;
+    height : 100%;
+    object-fit : cover;
+    object-position : top center;
 }
 
 .card-info {
@@ -70,3 +80,135 @@
 .no-items-p-tag {
     color:white;
 }
+
+#popup {
+    position: fixed;
+    top: -200px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    opacity: 0;
+
+    transition: top 0.35s ease-out, opacity 0.35s ease-out;
+    z-index: 99999; 
+}
+
+#popup.active {
+    top: 80px; 
+    opacity: 1;
+}
+
+
+.formcontainer {
+    width: 100%;
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #2b2b2b;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    font-family: "Poppins", sans-serif;
+    margin-top : 5rem;
+}
+
+#filterforms {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+
+.minimumbox, .maxbox {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px;
+    background: #f7f7f7;
+    border-radius: 10px;
+    border: 1px solid #e1e1e1;
+    width : 20vw;
+}
+
+
+.minimumbox span,
+.maxbox span {
+    font-weight: bold;
+}
+
+
+.minimumbox input[type="number"],
+.maxbox input[type="number"] {
+    width: 120px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+input[type="range"] {
+    width: 100%;
+    height: 6px;
+    border-radius: 6px;
+    background: #ddd;
+    outline: none;
+   
+}
+
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #4A73FF;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #4A73FF;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background: #4A73FF;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button[type="submit"]:hover {
+    background: #3959c9;
+}
+
+#filterbtn {
+    margin-top : 5rem;
+    padding: 10px 18px;
+    background: #4A73FF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.25s;
+}
+
+#filterbtn:hover {
+    background: #3959c9;
+    transform: translateY(-2px);
+}
+

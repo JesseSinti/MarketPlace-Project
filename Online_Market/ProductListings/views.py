@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Product, Category
 from .forms import NewProductForm, EditProductForm
+from StoreFront.filters import ProductFilter
 # Create your views here.
 
 # use pk intead of id pk == id but stops potential problems
@@ -51,17 +52,22 @@ def ProductBrowsing(request):
     cat_id = request.GET.get('category')
     view_selected_category = None
     all_categories = Category.objects.all()
+   
+    f = ProductFilter(request.GET, queryset=Product.objects.all())
+    filter_active = any(param in request.GET for param in request.GET.keys())
+
+
 
     if cat_id:
         items_queryset = items_queryset.filter(category_id=cat_id)
         view_selected_category = Category.objects.filter(id=cat_id).first()
-    print(view_selected_category)
-    print(items_queryset)
     context = {
     'filtered_products': items_queryset,
     'view_selected_category': view_selected_category,
     'all_categories': all_categories,
     'global_categories': all_categories,
     'global_selected_category': view_selected_category,
+    'filter' : f,
+    'filter_active' : filter_active
     }
     return render(request, 'storefront/home.html', context)

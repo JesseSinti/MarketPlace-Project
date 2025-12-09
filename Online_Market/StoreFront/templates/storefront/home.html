@@ -4,9 +4,62 @@
 <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>   
 <script src="{% static 'JS/buttons.js' %}" defer></script>
-<div id="container">
 
-    {% if view_selected_category %}
+<div id="popup"><p id="message">Item added to cart!</p></div>
+
+<button class="filterbtn" id="filterbtn">Filter ⚙️</button>
+<div id="container">
+    <div class="formcontainer" id="formcontainer" style="display: none">
+        <form method="get" id="filterforms">
+            
+            <div class="minimumbox">
+                Minimum Price: <span id="minVal"></span>
+                <input type="number" id="price_min" name="price_min" value="{{ request.GET.price_min|default:0 }}">
+                <input type="range" id="minRange" min="0" max="999999" step="15" value="0">
+            </div>
+
+            <div class="maxbox">
+                Maximum Price: <span id="maxVal"></span>
+                <input type="number" id="price_max" name="price_max" value="{{ request.GET.price_max|default:10000000}}">
+                <input type="range" id="maxRange" min="0" max="999999" steps="15" value="{{ request.GET.price_max|default:10000000 }}">
+            </div>
+
+
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
+
+    {% if filter_active %}
+                 <div class="category-section">
+                     <h2 class="category-title">Filtered Items </h2>
+                     <div class="items-grid">
+                    {% for product in filter.qs %}
+                             <div class="item-card" >
+                                 <a class="items-link-class" href="{% url 'product:productdetail' product.id %}">
+                                    <div class="imagecontainer">
+                                        <img class="home-item-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                    </div>
+                                     <div class="card-info">
+                                         <h3 class="text-2xl">{{ product.name }}</h3>
+                                         <p class="text-gray-500">Price: ${{ product.price }}</p>
+                                     </div>
+                                 </a>
+                             
+                                 <div class="purchase">
+                                     <a href="{% url 'storefront:checkout' product.id %}">
+                                         <button>Purchase</button>
+                                     </a>
+                                 </div>
+                                 <div class="cartadd">
+                                     <button class="add" data-id="{{ product.id }}">Add to cart</button> 
+                                 </div>
+                             </div>
+                    {% endfor %}
+                     </div>
+                 </div>    
+        
+
+    {% elif view_selected_category %}
         <div class="category-section">
             <h2 class="category-title">{{ view_selected_category.name }}</h2>
             <h1>{{ view_selected_category.name }}</h1>
@@ -14,7 +67,9 @@
                 {% for product in filtered_products %}
                     <div class="item-card">
                         <a class="items-link-class" href="{% url 'product:productdetail' product.id %}">
-                            <img class="home-item-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            <div class="imagecontainer">
+                                <img class="home-item-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            </div>
                             <div class="card-info">
                                 <h3 class="text-2xl">{{ product.name }}</h3>
                                 <p class="text-gray-500">Price: ${{ product.price }}</p>
@@ -44,7 +99,9 @@
                         {% for product in category.products.all %}
                             <div class="item-card" >
                                 <a class="items-link-class" href="{% url 'product:productdetail' product.id %}">
+                                    <div class="imagecontainer">
                                     <img class="home-item-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                    </div>
                                     <div class="card-info">
                                         <h3 class="text-2xl">{{ product.name }}</h3>
                                         <p class="text-gray-500">Price: ${{ product.price }}</p>
