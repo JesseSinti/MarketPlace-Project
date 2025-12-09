@@ -14,14 +14,12 @@
 </head>
 <body id="body"> 
 <div id='navbar'>
-
     <div id='searchbar'>
         <form method="get" action="{% url 'storefront:search' %}">
             <input type='text' name='query' class="searchbarsizing" value=""{{ query }} placeholder='Search'>
             <button hidden>Search</button>
         </form>
     </div>
-
     <div id="category-filter">
         <form method="get" action="{% url 'home' %}">
             <select name="category" onchange="this.form.submit()">
@@ -52,7 +50,7 @@
             <a class='singup-button' href="{% url 'storefront:signup' %}"><button class="signbtn">Sign Up</button></a>
         </div>
     {% endif %}
-
+    
     <div id='options'>
         <button class='options-button'>Information</button>
         <div id='options-dropdown'>

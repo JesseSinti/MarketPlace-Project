@@ -13,7 +13,8 @@ def ProductDetail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     #.exlcude keeps the item selected from popping up as a related item and [0:3] tells how many items to show as related
     similarProduct = Product.objects.filter(category=product.category, is_sold=False).exclude(pk=pk)[0:3]
-    return render(request, 'products/ProductDetail.html', {'product' : product, 'related_product': similarProduct})
+    product_data : str = "x: test data 1, y: test data 2, z: test data 3"
+    return render(request, 'products/ProductDetail.html', {'product': product, 'related_product': similarProduct, 'user_loggedin': request.user.is_authenticated, 'product_data': product_data})
 
 @login_required
 def NewProduct(request):
