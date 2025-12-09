@@ -4,7 +4,71 @@
 {% block title %}{{item.name}}{% endblock %}
 
 {%block content %}
-<div class="itemcontainer">
+<div class="itemcontainer"> 
+    {% if user_loggedin %}
+        <div id="form-container">
+            <form id="openai-form">
+                <label for="prompt-input">Enter your prompt:</label><br>
+                <textarea  id="prompt-input" rows="5" cols="50"></textarea><br>
+                <button type="submit">Generate Response</button>
+            </form>
+            <div id="openai-response">response</div> 
+        </div>
+        <script>
+            document.getElementById('openai-form').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                const prompt = document.getElementById('prompt-input').value + "!@#$%^&*()[" + "{{ product_data }}" + "]";
+                console.log(prompt)
+                const responseDiv = document.getElementById('openai-response');
+                responseDiv.innerHTML = 'Generating...';
+
+                try {
+                    const formData = new FormData();
+                    formData.append('prompt', prompt);
+
+                    const response = await fetch('/openai-api/', {
+                        method: 'POST',
+                        body: formData,
+                        // csrf 
+                        // headers: { 'X-CSRFToken': getCookie('csrftoken') }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    if (data.response) {
+                        responseDiv.innerHTML = data.response;
+                    } else if (data.error) {
+                        responseDiv.innerHTML = `Error: ${data.error}`;
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    responseDiv.innerHTML = `An error occurred: ${error.message}`;
+                }
+            });
+
+            // for csrf varification later
+            /*
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            */
+        </script>
+    {% endif %}
+
     <div class="itemimgcontainer">
         <img src="{{product.image.url}}" class="itemimg">
     </div>

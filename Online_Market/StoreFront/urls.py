@@ -6,7 +6,6 @@ from ProductListings import views as product_views
 
 app_name = 'storefront'
 urlpatterns = [
-    path('openai-api/', views.openAiProc, name='openAiProc'),
     path('logout/', views.Log_out, name='logout'),
     path('checkout/<int:pk>/', views.CheckoutView, name='checkout'),
     path('search/',views.SearchProducts, name='search'),

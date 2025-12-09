@@ -19,11 +19,12 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from ProductListings import views as product_views
-
+from StoreFront import views as sf_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('openai-api/', sf_views.openAiProc, name='openAiProc'),
     path('', product_views.ProductBrowsing, name='home'),
     path('storefront/', include('StoreFront.urls')),
     path('products/', include('ProductListings.urls')),
